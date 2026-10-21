@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    name: Backend — lint, typecheck, tests, build, audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install
+        working-directory: backend
+        run: npm ci
+
+      - name: Lint (NFR-33)
+        working-directory: backend
+        run: npm run lint
+
+      - name: Typecheck (NFR-33)
+        working-directory: backend
+        run: npm run typecheck
+
+      - name: Tests (NFR-34)
+        working-directory: backend
+        run: npm test
+
+      - name: Build
+        working-directory: backend
+        run: npm run build
+
+      - name: Dependency audit (SEC-22)
+        working-directory: backend
+        run: npm audit --audit-level=high
+
+  frontend:
+    name: Frontend — lint, typecheck, build, audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install
+        working-directory: frontend
+        run: npm ci
+
+      - name: Lint (NFR-33)
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Typecheck + build (NFR-33)
+        working-directory: frontend
+        run: npm run build
+
+      - name: Dependency audit (SEC-22)
+        working-directory: frontend
+        run: npm audit --audit-level=high

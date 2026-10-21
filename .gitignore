@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Env files — NEVER commit (NFR-31)
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test artifacts
+coverage/
+.vitest/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Local user-space MongoDB data
+hms-mongo-data/

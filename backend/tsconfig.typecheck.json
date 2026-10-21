@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "types": ["node", "express-session", "vitest/globals"]
+  },
+  "include": ["src/**/*", "tests/**/*"]
+}
